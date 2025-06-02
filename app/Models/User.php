@@ -20,6 +20,7 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'last_name',
         'email',
         'password',
     ];
@@ -47,10 +48,12 @@ class User extends Authenticatable
         ];
     }
 
-    public function creator(){
-    return $this->belongsTo(User::class, 'created_by');
-}
-    public function enrollments(){
+    public function createdCourses()
+    {
+    return $this->hasMany(Course::class, 'created_by');
+    }
+    public function enrollments()
+    {
         return $this->hasMany(Enrollment::class, 'user_id');
     }
 

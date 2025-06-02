@@ -10,13 +10,13 @@ class Course extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        'id',
         'description',
         'title',
+        'category_id'
     ];
 
-    public function createdCourses(){
-    return $this->hasMany(Course::class, 'created_by');
+    public function creator(){
+    return $this->belongsTo(User::class, 'created_by');;
 }
     public function category(){
     return $this->belongsTo(Category::class, 'category_id');

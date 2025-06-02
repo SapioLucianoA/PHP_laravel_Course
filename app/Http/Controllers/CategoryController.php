@@ -12,9 +12,19 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+        $categories = Category::all();
+        if ($categories->isEmpty()){
+            return response()->json([
+                'message' => 'No hay categorias a mostrar ' ,
+                'status' => 500
+            ], 500);
+        }
+        return response()->json([
+            'categories' => $categories,
+            'message' => 'Lista de Categorias',
+            'status' => 200
+        ], 200);
     }
-
     /**
      * Show the form for creating a new resource.
      */
@@ -28,7 +38,19 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string|max:500',
+        ]);
+
+        $category = Category::create([
+            'name' => $validatedData['name'],
+            'description' => $validatedData['description'] ?? null,
+        ]);
+        return response()->json([
+            'message' => 'Categoria creada exitosamente',
+            'category' => $category,
+        ], 201);
     }
 
     /**
