@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('evaluations', function (Blueprint $table) {
             $table->id();
-            $table->decimal('score', 4, 2);
+            $table->decimal('score', 4, 2)->nullable()->checkBetween('score', 0, 10);
             $table->text('feedback');
             $table->timestamp('evaluated_at')->nullable();
             $table->timestamps();
