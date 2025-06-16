@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use Illuminate\Http\Request;
 
+
 class CategoryController extends Controller
 {
     /**
@@ -13,9 +14,9 @@ class CategoryController extends Controller
     public function index()
     {
         $categories = Category::all();
-        if ($categories->isEmpty()){
+        if ($categories->isEmpty()) {
             return response()->json([
-                'message' => 'No hay categorias a mostrar ' ,
+                'message' => 'No hay categorias a mostrar ',
                 'status' => 500
             ], 500);
         }
@@ -54,11 +55,30 @@ class CategoryController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * todos los cursos asociadops a una categoria
      */
-    public function show(Category $category)
+    public function show(int $id)
     {
-        //
+        try {
+            $category = Category::with(['courses:id,title'])->findOrFail($id);
+
+            if (!$category) {
+                return response()->json([
+                    'message' => 'Categoria no encontrada',
+                    'status' => 404
+                ], 404);
+            }
+
+            return response()->json([
+                'Category' => $category,
+                'status' => 200
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Error al obtener la Categoria',
+                'status' => 500
+            ], 500);
+        }
     }
 
     /**
@@ -72,16 +92,46 @@ class CategoryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Category $category)
+    public function update(Request $request, int $id)
     {
-        //
+        try {
+            $validateData = $request->validate([
+                'name' => 'required|string|max:255',
+                'description' => 'required|string|max:500',
+            ]);
+            $category = Category::findOrFail($id);
+            $category->name = $validateData['name'];
+            $category->description = $validateData['description'];
+            $category->save();
+            return response()->json([
+                'message' => 'Categoria actualizada exitosamente',
+                'category' => $category,
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Error al actualizar la categoria',
+                'status' => 500
+            ], 500);
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Category $category)
+    public function destroy(int $id)
     {
-        //
+        try{
+            $category = Category::findOrFail($id);
+            $category->delete();
+            return response()->json([
+                'message' => 'Categoria eliminada exitosamente',
+                'status' => 200
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Error al eliminar la categoria',
+                'status' => 500
+            ], 500);
+        }
     }
 }
