@@ -13,7 +13,8 @@ class UserController extends Controller
    */
   public function index()
   {
-    $users = User::select('id', 'name', 'email')->get();
+    try{
+      $users = User::select('id', 'name', 'last_name','email')->get();
 
     if ($users->isEmpty()) {
       return response()->json([
@@ -27,14 +28,48 @@ class UserController extends Controller
       'message' => 'Lista de Usuarios',
       'status' => 200
     ]);
+    }catch(\Exception $e) {
+      return response()->json([
+        'message' => 'Error al obtener los usuarios',
+        'status' => 500
+      ], 500);
+    }
+
   }
 
   /**
    * Show the form for creating a new resource.
    */
-  public function create()
+  public function createAdmin(Request $request)
   {
-    //
+    try{
+$validatedData = $request->validate([
+      'name' => 'required|string|max:255',
+      'last_name' => 'required|string|max:255',
+      'email' => 'required|email|unique:users',
+      'password' => 'required|string|min:8|max:16',
+    ]);
+
+    $validatedData['password'] = bcrypt($validatedData['password']);
+    $user = User::create([
+      'name' => $validatedData['name'],
+      'last_name' => $validatedData['last_name'],
+      'email' => $validatedData['email'],
+      'password' => $validatedData['password'],
+      'is_admin' => true,
+    ]);
+
+    return response()->json([
+      'message' => 'Usuario creado',
+      'user' => $user->only(['id', 'name', 'last_name', 'email', 'is_admin']),
+    ], 201);
+    }catch (\Exception $e) {
+      return response()->json([
+        'message' => 'Error al crear el usuario',
+        'status' => 500
+      ], 500);
+    }
+    
   }
 
   /**
@@ -50,11 +85,17 @@ class UserController extends Controller
     ]);
 
     $validatedData['password'] = bcrypt($validatedData['password']);
-    $user = User::create($validatedData);
+    $user = User::create([
+      'name' => $validatedData['name'],
+      'last_name' => $validatedData['last_name'],
+      'email' => $validatedData['email'],
+      'password' => $validatedData['password'],
+      'is_admin' => false,
+    ]);
 
     return response()->json([
       'message' => 'Usuario creado',
-      'user' => $user->only(['id', 'name', 'lastName', 'email']),
+      'user' => $user->only(['id', 'name', 'last_name', 'email']),
     ], 201);
   }
 
@@ -64,7 +105,7 @@ class UserController extends Controller
   public function show($id)
   {
     try {
-      $user = User::select('id', 'name', 'last_name','email')->find($id);
+      $user = User::select('id', 'name', 'last_name','email','is_admin')->find($id);
 
       if (!$user) {
         return response()->json([
@@ -96,7 +137,7 @@ class UserController extends Controller
   /**
    * Update the specified resource in storage.
    */
-  public function update(Request $request, $id)
+  public function update(Request $request, int $id)
   {
     try{
       $validateData = $request->validate([
@@ -104,28 +145,21 @@ class UserController extends Controller
         'last_name' => 'required|string|max:255',
         'email' => 'required|email|unique:users,email,' . $id,
       ]);
-      // Toma un ID y devuelve un único modelo. Si no existe ningún modelo coincidente, se produce un error
-      //a diferencia de find() que devuelve null si no encuentra el modelo
       $User = User::findOrFail($id);
-      $User->name = $validateData['name'] ?? $User->name;
-      $User->last_name = $validateData['last_name'] ?? $User->last_name;
-      $User->email = $validateData['email'] ?? $User->email;
-
-      //save() guarda el modelo en la base de datos
+      $User->name = $validateData['name'] ;
+      $User->last_name = $validateData['last_name'] ;
+      $User->email = $validateData['email'] ;
       $User->save();
       
       return response()->json([
         'message' => 'Usuario actualizado',
         'user' => $User->only(['name', 'last_name', 'email']), 
-        // 'user' retorna los campos deseados, no se suele usar solo en casos especificos si es que
-        //el front necesita los datos para mostrar al usaurio
-        //depende del nivel de comunicacion que quiera tener la app con el usuario 
-        //dejar como modo de prueba por ahora
+
         'status' => 200
       ]);
     }catch (\Exception $e) {
       return response()->json([
-        'message' => 'Error al actualizar el usuario',
+        'message' => $e->getMessage(),
         'status' => 500
       ], 500);
     }
