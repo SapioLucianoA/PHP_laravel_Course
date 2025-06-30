@@ -1,0 +1,1384 @@
+{
+	"info": {
+		"_postman_id": "fc01eb71-5a8d-4f5e-9497-66d75fdc2f1b",
+		"name": "Course PHP_LARAVEL",
+		"description": "CAMBIAR EL VALOR DE TOKEN A LA HORA DE LOGUEARSE",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "45304839",
+		"_collection_link": "https://sapio-lucky.postman.co/workspace/Sapio-Lucky's-Workspace~bc7b084c-f2a4-428e-8ed8-155bb998bd3c/collection/45304839-fc01eb71-5a8d-4f5e-9497-66d75fdc2f1b?action=share&source=collection_link&creator=45304839"
+	},
+	"item": [
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "postUser_not_admin",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{Accept}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "{{Content-Type}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "Desiderio",
+									"type": "text"
+								},
+								{
+									"key": "last_name",
+									"value": "Duarte",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "noadmmin12@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "noadmin123",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url_course}}/user",
+							"host": [
+								"{{url_course}}"
+							],
+							"path": [
+								"user"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "Christian",
+									"disabled": true
+								},
+								{
+									"key": "last_name",
+									"value": "Chricoso",
+									"disabled": true
+								},
+								{
+									"key": "email",
+									"value": "Chricoso@gmail.com",
+									"disabled": true
+								},
+								{
+									"key": "password",
+									"value": "Luckyyyy1234",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getUsers",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url_course}}/users",
+							"host": [
+								"{{url_course}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete_user",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{Accept}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "{{Content-Type}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url_course}}/user/7",
+							"host": [
+								"{{url_course}}"
+							],
+							"path": [
+								"user",
+								"7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create_user_admin",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{Accept}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "{{Content-Type}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "ADmin",
+									"type": "text"
+								},
+								{
+									"key": "last_name",
+									"value": "ADmin",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "admin21@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "adminadmin",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url_course}}/admin",
+							"host": [
+								"{{url_course}}"
+							],
+							"path": [
+								"admin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get ONE user",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{Accept}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "{{Content-Type}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url_course}}/user/2",
+							"host": [
+								"{{url_course}}"
+							],
+							"path": [
+								"user",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "edit_user",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{Accept}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "{{Content-Type}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Christian\",\r\n    \"last_name\": \"Pilo Romero\",\r\n    \"email\": \"christian1@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url_course}}/user/6",
+							"host": [
+								"{{url_course}}"
+							],
+							"path": [
+								"user",
+								"6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Course_por_Ususario",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{Accept}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "{{Content-Type}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url_course}}/user/2/courses",
+							"host": [
+								"{{url_course}}"
+							],
+							"path": [
+								"user",
+								"2",
+								"courses"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Evalaution_por_user",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{Accept}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "{{Accept}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url_course}}/user/9/evaluations",
+							"host": [
+								"{{url_course}}"
+							],
+							"path": [
+								"user",
+								"9",
+								"evaluations"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Category",
+			"item": [
+				{
+					"name": "get-All-categfories",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{Accept}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "{{Content-Type}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Christian\",\r\n    \"last_name\": \"Pilo Romero\",\r\n    \"email\": \"christian@gmail.com\"\r\n}"
+						},
+						"url": {
+							"raw": "{{url_course}}/categories",
+							"host": [
+								"{{url_course}}"
+							],
+							"path": [
+								"categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get-ONE-category",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{Accept}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "{{Content-Type}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Christian\",\r\n    \"last_name\": \"Pilo Romero\",\r\n    \"email\": \"christian@gmail.com\"\r\n}"
+						},
+						"url": {
+							"raw": "{{url_course}}/category/4",
+							"host": [
+								"{{url_course}}"
+							],
+							"path": [
+								"category",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create-category",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{Accept}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "{{Content-Type}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "Mateaticas basicas",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "todo sobre el inicio en el pasionante mundo de los numeros ",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url_course}}/category",
+							"host": [
+								"{{url_course}}"
+							],
+							"path": [
+								"category"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "edit category",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{Accept}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "{{Content-Type}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"nombre de categoria cambiada\",\r\n    \"description\": \"esta categoria fue cambiada un total de 2-veces antes del borrado\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url_course}}/category/5",
+							"host": [
+								"{{url_course}}"
+							],
+							"path": [
+								"category",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete categoria",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{Accept}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "{{Content-Type}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"nombre de categoria cambiada4\",\r\n    \"description\": \"esta categoria fue cambiada un total de 4-veces antes del borrado\"\r\n}"
+						},
+						"url": {
+							"raw": "{{url_course}}/category/5",
+							"host": [
+								"{{url_course}}"
+							],
+							"path": [
+								"category",
+								"5"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Course",
+			"item": [
+				{
+					"name": "get-ALL-courses",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{Accept}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "{{Content-Type}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Christian\",\r\n    \"last_name\": \"Pilo Romero\",\r\n    \"email\": \"christian@gmail.com\"\r\n}"
+						},
+						"url": {
+							"raw": "{{url_course}}/courses",
+							"host": [
+								"{{url_course}}"
+							],
+							"path": [
+								"courses"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create-Course",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{Accept}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "{{Content-Type}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "title",
+									"value": "Course de prueba 7 sin creeated_by",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": " Aprendé las bases del framework más popular de PHP.",
+									"type": "text"
+								},
+								{
+									"key": "created_by",
+									"value": " 1",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "category_id",
+									"value": " 4",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url_course}}/course",
+							"host": [
+								"{{url_course}}"
+							],
+							"path": [
+								"course"
+							],
+							"query": [
+								{
+									"key": "title",
+									"value": "Prueba de Courso  1",
+									"disabled": true
+								},
+								{
+									"key": "description",
+									"value": "es una prueba por lo cual será eliminado",
+									"disabled": true
+								},
+								{
+									"key": "category_id",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "user_id",
+									"value": "1",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get-One-Course",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{Accept}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "{{Content-Type}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Christian\",\r\n    \"last_name\": \"Pilo Romero\",\r\n    \"email\": \"christian@gmail.com\"\r\n}"
+						},
+						"url": {
+							"raw": "{{url_course}}/course/8",
+							"host": [
+								"{{url_course}}"
+							],
+							"path": [
+								"course",
+								"8"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "edit Course",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{Accept}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "{{Content-Type}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"nombre de categoria cambiada\",\r\n    \"description\": \"esta categoria fue cambiada un total de 2-veces antes del borrado\",\r\n    \"category_id\": 6,\r\n    \"created_by\":2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url_course}}/course/7",
+							"host": [
+								"{{url_course}}"
+							],
+							"path": [
+								"course",
+								"7"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Enrollment",
+			"item": [
+				{
+					"name": "get_ALL_enrolments",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{Accept}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "{{Content-Type}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url_course}}/enrollments?page=1",
+							"host": [
+								"{{url_course}}"
+							],
+							"path": [
+								"enrollments"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get One enrolllment",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{Accept}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "{{Content-Type}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url_course}}/enrollment/4",
+							"host": [
+								"{{url_course}}"
+							],
+							"path": [
+								"enrollment",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create_enrollment",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{Accept}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "{{Content-Type}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "user_id",
+									"value": "3",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "course_id",
+									"value": "3",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url_course}}/enrollment",
+							"host": [
+								"{{url_course}}"
+							],
+							"path": [
+								"enrollment"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit ENrollment",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{Accept}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "{{Content-Type}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"user_id\": 1,\r\n    \"course_id\":6\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url_course}}/enrollment/7",
+							"host": [
+								"{{url_course}}"
+							],
+							"path": [
+								"enrollment",
+								"7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete ENrollment",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{Accept}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "{{Content-Type}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"user_id\": 1,\r\n    \"course_id\":6\r\n}"
+						},
+						"url": {
+							"raw": "{{url_course}}/enrollment/7",
+							"host": [
+								"{{url_course}}"
+							],
+							"path": [
+								"enrollment",
+								"7"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Evaluation",
+			"item": [
+				{
+					"name": "Get All Evaluations",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url_course}}/evaluations",
+							"host": [
+								"{{url_course}}"
+							],
+							"path": [
+								"evaluations"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get ONE evaluation",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{Accept}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "{{Content-Type}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{url_course}}/evaluation/1",
+							"host": [
+								"{{url_course}}"
+							],
+							"path": [
+								"evaluation",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create Evaluation",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{Accept}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "{{Content-Type}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"score\":8.5,\r\n\"feedback\":\"muy bien, pero lo siento tigre de las montañas de maicena, pero te faltó agregar las normas APA numero 17, asi que te vas desaprobado papu\",\r\n\"enrollment_id\":5\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url_course}}/evaluation",
+							"host": [
+								"{{url_course}}"
+							],
+							"path": [
+								"evaluation"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar evalaution",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{Accept}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "{{Content-Type}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"score\": 0,\r\n    \"feedback\": \"te pongo 0 porque menos no puedo ponerte malo qlo\",\r\n    \"enrollment_id\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url_course}}/evaluation/4",
+							"host": [
+								"{{url_course}}"
+							],
+							"path": [
+								"evaluation",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Evalaution",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url_course}}/evaluation/4",
+							"host": [
+								"{{url_course}}"
+							],
+							"path": [
+								"evaluation",
+								"4"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "AUHT/logOut",
+			"item": [
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{Accept}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "{{Content-Type}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"password\":\"noadmin123\",\r\n    \"email\":\"noadmmin12@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url_course}}/login",
+							"host": [
+								"{{url_course}}"
+							],
+							"path": [
+								"login"
+							],
+							"query": [
+								{
+									"key": "password",
+									"value": "noadmin123",
+									"disabled": true
+								},
+								{
+									"key": "email",
+									"value": "noadmmin1@gmail.com",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "logout",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{Accept}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "{{Content-Type}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url_course}}/logout",
+							"host": [
+								"{{url_course}}"
+							],
+							"path": [
+								"logout"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

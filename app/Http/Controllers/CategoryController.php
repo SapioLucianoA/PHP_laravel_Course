@@ -63,18 +63,16 @@ class CategoryController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreCategoryRequest $request)
     {
         try {
-            $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'nullable|string|max:500',
-        ]);
+            $validatedData = $request->validated();
 
             $category = Category::create([
                 'name' => $validatedData['name'],
                 'description' => $validatedData['description'] ?? null
             ]);
+
             return response()->json([
                 'status' => 'success',
                 'data' => $category ->only(['id', 'name', 'description']),
@@ -84,11 +82,6 @@ class CategoryController extends Controller
             return response()->json([
                 'status' => 'error',
                 'message' => 'Failed to create category: ' . $e->getMessage()
-            ], 500);
-        }catch (\Exception $e) {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Database error: ' . $e->getMessage()
             ], 500);
         }
     }
@@ -124,13 +117,10 @@ class CategoryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, int $id)
+    public function update(UpdateCategoryRequest $request, int $id)
     {
         try {
-            $validateData = $request->validate([
-                'name' => 'required|string|max:255',
-                'description' => 'required|string|max:500',
-            ]);
+            $validateData = $request->validated();
             $category = Category::findOrFail($id);
             $category->name = $validateData['name'];
             $category->description = $validateData['description'];

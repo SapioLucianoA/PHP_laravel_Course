@@ -34,19 +34,16 @@ class EvaluationController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreEvaluationRequest $request)
     {
         try {
-            $validatedData = $request->validate([
-                'score' => 'required|numeric|min:0|max:10',
-                'feedback' => 'nullable|string|max:1000',
-                'enrollment_id' => 'required|exists:enrollments,id',
-            ]);
+            $validatedData = $request->validated();
+            
             $evaluation = Evaluation::create([
                 'enrollment_id' => $validatedData['enrollment_id'],
                 'score' => $validatedData['score'],
                 'feedback' => $validatedData['feedback'],
-                'evaluated_at' => now(),
+                'evaluated_at' => now()->format('Y-m-d H:i:s'),
             ]); 
             return response()->json([
                 'evaluation' => $evaluation->only(['id', 'enrollment_id', 'score', 'feedback', 'evaluated_at']),
@@ -74,33 +71,32 @@ class EvaluationController extends Controller
      */
     public function edit(Request $request, int $id )
     {
-        try {
-            $validateData = $request->validate([
-                'enrollment_id' => 'required|exists:enrollments,id',
-                'score' => 'required|numeric|min:0|max:10',
-                'feedback' => 'nullable|string|max:1000',
-            ]);
-            $evaluation = Evaluation::findOrFail($id);
-            $evaluation->enrollment_id = $validateData['enrollment_id'];
-            $evaluation->score = $validateData['score'];
-            $evaluation->feedback = $validateData['feedback'];
-            $evaluation->evaluated_at = now(); // Actualizar la fecha de evaluación
-            $evaluation->save();
-            return response()->json([
-                'message' => 'Evaluación actualizada exitosamente',
-                'evaluation' => $evaluation->only(['id', 'enrollment_id', 'score', 'feedback', 'evaluated_at']),
-            ], 200);
-        } catch (\Exception $e) {
-            return response()->json(['error' => 'falló al obtener la evaluación: ' . $e->getMessage()], 500);
-        }
+        //
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateEvaluationRequest $request, Evaluation $evaluation)
+    public function update(UpdateEvaluationRequest $request, int $id)
     {
-        //
+        try {
+            $validateData = $request->validated();
+
+            $evaluation = Evaluation::findOrFail($id);
+            $evaluation->enrollment_id = $validateData['enrollment_id'];
+            $evaluation->score = $validateData['score'];
+            $evaluation->feedback = $validateData['feedback'];
+            $evaluation->evaluated_at = now()->format('Y-m-d H:i:s'); // Actualizar la fecha de evaluación
+            $evaluation->save();
+
+            return response()->json([
+                'message' => 'Evaluación actualizada exitosamente',
+                'evaluation' => $evaluation,
+            ], 200);
+
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'falló al obtener la evaluación: ' . $e->getMessage()], 500);
+        }
     }
 
     /**

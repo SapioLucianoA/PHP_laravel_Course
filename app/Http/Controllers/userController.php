@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class userController extends Controller
 {
@@ -83,7 +84,10 @@ class userController extends Controller
                 'user' => $user->only(['id', 'name', 'last_name', 'email']),
             ], 201);
         } catch (\Exception $e) {
-            return response()->json(['error' => 'Error al crear el usuario'], 500);
+            return response()->json(['error' => 'Error al crear el usuario',
+                'details' => $e->getMessage(),
+                
+            ], 500);
         }
     }
 
@@ -94,7 +98,7 @@ class userController extends Controller
     public function show(int $id)
     {
         try {
-            $user = User::select('id', 'name', 'last_name', 'email', 'is_admin')->find($id);
+            $user = User::select('id', 'name', 'last_name', 'email','role')->find($id);
 
             if (!$user) {
                 return response()->json([
@@ -109,7 +113,7 @@ class userController extends Controller
             ]);
         } catch (\Exception $e) {
             return response()->json([
-                'message' => 'Error al obtener el usuario',
+                'message' => 'Error al obtener el usuario' . $e->getMessage(),
                 'status' => 500
             ], 500);
         }
@@ -140,6 +144,21 @@ class userController extends Controller
     public function showUserEvaluations(int $id)
     {
         try {
+            $authUser = Auth::user();
+        
+
+        if (!$authUser) {
+            return response()->json(['message' => 'Unauthorized'], 401);
+        }
+
+
+        if ($authUser->role === 'student' && $authUser->id != $id) {
+            return response()->json([
+                'message' => 'No tienes permiso para ver estas evaluaciones',
+                'status' => 403
+            ], 403);
+        }
+
             $user = User::with([
                 'enrollments.evaluations'
             ])->findOrFail($id);
@@ -177,6 +196,14 @@ class userController extends Controller
     public function update(Request $request, int $id)
     {
         try {
+
+            $authUser = Auth::user();
+            if ($id != $authUser->id) {
+                return response()->json([
+                    'message' => 'No tienes permiso para actualizar este usuario',
+                    'status' => 403
+                ], 403);
+            }
             $validateData = $request->validate([
                 'name' => 'required|string|max:255',
                 'last_name' => 'required|string|max:255',

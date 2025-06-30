@@ -11,7 +11,7 @@ class UpdateCategoryRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,17 @@ class UpdateCategoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => 'required|string|max:255',
+            'description' => 'required|string|max:500',
+        ];
+    }
+    public function messages(): array
+    {
+        return [
+            'name.required' => 'El nombre de la categoría es obligatorio',
+            'name.max' => 'El nombre no puede exceder los 255 caracteres',
+            'description.required' => 'La descripción de la categoría es obligatoria',
+            'description.max' => 'La descripción no puede exceder los 500 caracteres',
         ];
     }
 }

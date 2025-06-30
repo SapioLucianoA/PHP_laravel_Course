@@ -11,7 +11,7 @@ class UpdateEvaluationRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,21 @@ class UpdateEvaluationRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'enrollment_id' => 'required|exists:enrollments,id',
+                'score' => 'required|numeric|min:0|max:10',
+                'feedback' => 'nullable|string|max:1000',
+        ];
+    }
+    public function messages(): array
+    {
+        return [
+            'enrollment_id.required' => 'El ID de inscripción es obligatorio',
+            'enrollment_id.exists' => 'La inscripción especificada no existe',
+            'score.required' => 'El puntaje es obligatorio',
+            'score.numeric' => 'El puntaje debe ser un número',
+            'score.min' => 'El puntaje no puede ser menor a 0',
+            'score.max' => 'El puntaje no puede ser mayor a 10',
+            'feedback.max' => 'El feedback no puede exceder los 1000 caracteres',
         ];
     }
 }

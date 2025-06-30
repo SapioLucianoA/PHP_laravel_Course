@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Enrollment;
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreEnrollmentRequest;
+use App\Http\Requests\UpdateEnrollmentRequest;
+use Illuminate\Support\Facades\Auth;
 
 class EnrollmentController extends Controller
 {
@@ -36,15 +39,17 @@ class EnrollmentController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreEnrollmentRequest $request)
     {
         try {
-            $validatedData = $request->validate([
-                'user_id' => 'required|exists:users,id',
-                'course_id' => 'required|exists:courses,id',
-            ]);
+            
+            $validatedData = $request->validated();
+
+            $user = Auth::user();
+
+            
             // Validar si ya existe una inscripción
-            $alreadyEnrolled = Enrollment::where('user_id', $validatedData['user_id'])
+            $alreadyEnrolled = Enrollment::where('user_id', $user->id)
                 ->where('course_id', $validatedData['course_id'])
                 ->exists();
 
@@ -54,9 +59,9 @@ class EnrollmentController extends Controller
                 ], 422);
             }
             $enrollment = Enrollment::create([
-                'user_id' => $validatedData['user_id'],
+                'user_id' => $user->id,
                 'course_id' => $validatedData['course_id'],
-                'enrolled_at' => now(),
+                'enrolled_at' => now()->format('Y-m-d H:i:s'),
             ]);
             $enrollment->load('user', 'course');
             return response()->json([
@@ -74,7 +79,7 @@ class EnrollmentController extends Controller
     public function show(int $id)
     {
         try {
-            $enrollment = Enrollment::with('user: id, name,last_name', 'course: id,title')
+            $enrollment = Enrollment::with('user', 'course')
                 ->findOrFail($id);
 
             return response()->json($enrollment, 200);
@@ -97,17 +102,20 @@ class EnrollmentController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, int $id)
+    public function update(UpdateEnrollmentRequest $request, int $id)
     {
         try {
             $enrollment = Enrollment::findOrFail($id);
-            $validatedData = $request->validate([
-                'user_id' => 'required|exists:users,id',
-                'course_id' => 'required|exists:courses,id',
-            ]);
+            $validatedData = $request->validated();
+            
             $enrollment->user_id = $validatedData['user_id'];
             $enrollment->course_id = $validatedData['course_id'];
             $enrollment->save();
+            $enrollment->load('user', 'course');
+            return response()->json([
+                'message' => 'Inscripción actualizada correctamente',
+                'enrollment' => $enrollment->only(['id', 'enrolled_at' , 'user', 'course']),
+            ], 200);
         } catch (\Exception $e) {
             return response()->json([
                 'error' => 'Error al actualizar la inscripción',

@@ -14,11 +14,11 @@ class Evaluation extends Model
     use HasFactory;
 
     protected $fillable = [
-        'enrollment_id',
-        'score',
-        'feedback',
-        'evaluated_at'
-    ];
+    'enrollment_id', 
+    'score', 
+    'feedback',
+    'evaluated_at'
+];
 
     public function enrollment()
     {

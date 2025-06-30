@@ -11,7 +11,7 @@ class UpdateenrollmentRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,17 @@ class UpdateenrollmentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'user_id' => 'required|exists:users,id',
+            'course_id' => 'required|exists:courses,id',
+        ];
+    }
+    public function messages(): array
+    {
+        return [
+            'user_id.required' => 'El ID del usuario es obligatorio',
+            'user_id.exists' => 'El usuario no existe',
+            'course_id.required' => 'El ID del curso es obligatorio',
+            'course_id.exists' => 'El curso no existe',
         ];
     }
 }

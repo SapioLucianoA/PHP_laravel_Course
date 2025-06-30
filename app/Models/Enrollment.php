@@ -16,7 +16,11 @@ class Enrollment extends Model
         'user_id',
         'course_id',
     ];
-
+    protected $hidden = [
+        'created_at',
+        'updated_at',
+        'deleted_at',
+    ];
     public function user()
     {
         return $this->belongsTo(User::class);

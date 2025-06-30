@@ -11,7 +11,7 @@ class StoreenrollmentRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,13 @@ class StoreenrollmentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'course_id' => 'required|exists:courses,id',
+        ];
+    }
+    public function messages(): array
+    {
+        return [
+            'course_id.exists' => 'El curso no existe',
         ];
     }
 }

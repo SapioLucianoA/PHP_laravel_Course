@@ -5,8 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Course;
 use App\Http\Requests\StoreCourseRequest;
 use App\Http\Requests\UpdateCourseRequest;
+use Illuminate\Contracts\Cache\Store;
 use Illuminate\Http\Request;
-use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class CourseController extends Controller
 {
@@ -23,14 +24,14 @@ class CourseController extends Controller
         'title' => $course->title,
         'description' => $course->description,
         'category' => [
-            'id' => $course->category->id,
-            'name' => $course->category->name,
+            'id' => $course->category->id ?? null,
+            'name' => $course->category->name ?? null,
         ],
         'creator' => [
-            'id' => $course->creator->id,
-            'name' => $course->creator->name,
-            'last_name' => $course->creator->last_name,
-            'email' => $course->creator->email,
+            'id' => $course->creator->id ?? null,
+            'name' => $course->creator->name ?? null,
+            'last_name' => $course->creator->last_name ?? null,
+            'email' => $course->creator->email ?? null,
         ],
     ];
 });
@@ -57,36 +58,30 @@ class CourseController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreCourseRequest $request)
     {
         try {
-            $validatedData = $request->validate([
-                'title' => 'required|string|max:255',
-                'description' => 'required|string|max:1000',
-                'created_by' => 'required|exists:users,id',
-                'category_id' => 'required|exists:categories,id',
-            ]);
-            $user = User::find($validatedData['created_by']);
-
-            if (!$user || $user->role !== 'admin') {
-                return response()->json(['error' => 'Solo los administradores pueden crear cursos'], 403);
-            }
+            $validatedData = $request->validated();
+            $adminUser = Auth::user();
 
             $course = Course::create([
                 'title' => $validatedData['title'],
                 'description' => $validatedData['description'],
-                'created_by' => $validatedData['created_by'],
+                'created_by' => $adminUser->id,
                 'category_id' => $validatedData['category_id'],
             ]);
             $course->load('category', 'creator');
             return response()->json([
                 'message' => 'Curso creado exitosamente',
-                'course' => $course
+                'course' => $course,
+                'user' => $adminUser
             ], 201);
         } catch (\Exception $e) {
             return response()->json([
                 'error' => 'Error al crear el curso',
-                'message' => $e->getMessage()
+                'message' => $e->getMessage(),
+                'user' => $adminUser
+                
             ], 500);
         }
     }
@@ -122,7 +117,7 @@ class CourseController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, int $id)
+    public function update(UpdateCourseRequest $request, int $id)
     {
         try {
             $course = Course::findOrFail($id);
