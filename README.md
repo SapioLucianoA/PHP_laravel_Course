@@ -104,10 +104,10 @@ Incluí una colección de Postman preconfigurada para probar la API fácilmente:
 📂 Estructura:
 
 postman_enviorment/
-├── collections/
-│   └── EducaAPI.postman_collection.json  # Todos los endpoints
+├── collection/
+│   └── Course_PHP_LARAVEL.postman_collection.json  # Todos los endpoints
 ├── environments/
-│   └── EducaAPI_Local.postman_environment.json  # Variables para localhost
+│   └── PHP-Course_FINAL.postman_environment.json  # Variables para localhost
 
 
 📌  Cómo importar:
