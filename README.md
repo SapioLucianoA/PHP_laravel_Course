@@ -19,11 +19,15 @@ Laravel 10+
 MySQL 8.0+
 
 bash----------------------------------------------------------------
-git clone https://github.com/tu-usuario/tu-repositorio.git
-cd tu-repositorio
+
+git clone https://github.com/SapioLucianoA/PHP_LARAVEL_course
+
 composer install
+
 cp .env.example .env
+
 php artisan migrate --seed
+
 ---------------------------------------------------------------------
 ## 📡 Endpoints Clave
 
